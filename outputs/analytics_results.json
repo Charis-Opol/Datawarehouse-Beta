@@ -1,0 +1,1016 @@
+{
+  "top10_africa_gdp": [
+    {
+      "country_name": "Egypt",
+      "sub_region": null,
+      "year": 2023,
+      "gdp_billion_usd": 395.93
+    },
+    {
+      "country_name": "South Africa",
+      "sub_region": "Southern Africa",
+      "year": 2023,
+      "gdp_billion_usd": 377.78
+    },
+    {
+      "country_name": "Nigeria",
+      "sub_region": "Western Africa",
+      "year": 2023,
+      "gdp_billion_usd": 362.81
+    },
+    {
+      "country_name": "Algeria",
+      "sub_region": null,
+      "year": 2023,
+      "gdp_billion_usd": 239.9
+    },
+    {
+      "country_name": "Ethiopia",
+      "sub_region": "Eastern Africa",
+      "year": 2023,
+      "gdp_billion_usd": 163.7
+    },
+    {
+      "country_name": "Morocco",
+      "sub_region": null,
+      "year": 2023,
+      "gdp_billion_usd": 141.11
+    },
+    {
+      "country_name": "Sudan",
+      "sub_region": null,
+      "year": 2023,
+      "gdp_billion_usd": 109.33
+    },
+    {
+      "country_name": "Kenya",
+      "sub_region": "Eastern Africa",
+      "year": 2023,
+      "gdp_billion_usd": 107.44
+    },
+    {
+      "country_name": "Angola",
+      "sub_region": "Middle Africa",
+      "year": 2023,
+      "gdp_billion_usd": 84.72
+    },
+    {
+      "country_name": "Tanzania",
+      "sub_region": "Eastern Africa",
+      "year": 2023,
+      "gdp_billion_usd": 79.16
+    }
+  ],
+  "east_africa_gdp_trend": [
+    {
+      "country_name": "Burundi",
+      "year": 2000,
+      "gdp_billion_usd": 0.87
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2001,
+      "gdp_billion_usd": 0.877
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2002,
+      "gdp_billion_usd": 0.825
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2003,
+      "gdp_billion_usd": 0.785
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2004,
+      "gdp_billion_usd": 0.915
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2005,
+      "gdp_billion_usd": 1.117
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2006,
+      "gdp_billion_usd": 1.273
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2007,
+      "gdp_billion_usd": 1.356
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2008,
+      "gdp_billion_usd": 1.612
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2009,
+      "gdp_billion_usd": 1.781
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2010,
+      "gdp_billion_usd": 2.032
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2011,
+      "gdp_billion_usd": 2.236
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2012,
+      "gdp_billion_usd": 2.333
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2013,
+      "gdp_billion_usd": 2.452
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2014,
+      "gdp_billion_usd": 2.706
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2015,
+      "gdp_billion_usd": 3.104
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2016,
+      "gdp_billion_usd": 2.644
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2017,
+      "gdp_billion_usd": 2.724
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2018,
+      "gdp_billion_usd": 2.667
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2019,
+      "gdp_billion_usd": 2.577
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2020,
+      "gdp_billion_usd": 2.65
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2021,
+      "gdp_billion_usd": 2.776
+    },
+    {
+      "country_name": "Burundi",
+      "year": 2022,
+      "gdp_billion_usd": 3.339
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2000,
+      "gdp_billion_usd": 8.242
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2001,
+      "gdp_billion_usd": 8.231
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2002,
+      "gdp_billion_usd": 7.851
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2003,
+      "gdp_billion_usd": 8.624
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2004,
+      "gdp_billion_usd": 10.131
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2005,
+      "gdp_billion_usd": 12.401
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2006,
+      "gdp_billion_usd": 15.281
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2007,
+      "gdp_billion_usd": 19.708
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2008,
+      "gdp_billion_usd": 27.067
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2009,
+      "gdp_billion_usd": 32.437
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2010,
+      "gdp_billion_usd": 29.934
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2011,
+      "gdp_billion_usd": 31.953
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2012,
+      "gdp_billion_usd": 43.311
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2013,
+      "gdp_billion_usd": 47.648
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2014,
+      "gdp_billion_usd": 55.612
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2015,
+      "gdp_billion_usd": 64.589
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2016,
+      "gdp_billion_usd": 74.297
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2017,
+      "gdp_billion_usd": 81.771
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2018,
+      "gdp_billion_usd": 84.269
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2019,
+      "gdp_billion_usd": 95.913
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2020,
+      "gdp_billion_usd": 107.658
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2021,
+      "gdp_billion_usd": 111.262
+    },
+    {
+      "country_name": "Ethiopia",
+      "year": 2022,
+      "gdp_billion_usd": 126.773
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2000,
+      "gdp_billion_usd": 12.705
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2001,
+      "gdp_billion_usd": 12.986
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2002,
+      "gdp_billion_usd": 13.148
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2003,
+      "gdp_billion_usd": 14.905
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2004,
+      "gdp_billion_usd": 16.095
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2005,
+      "gdp_billion_usd": 18.738
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2006,
+      "gdp_billion_usd": 25.826
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2007,
+      "gdp_billion_usd": 31.958
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2008,
+      "gdp_billion_usd": 35.895
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2009,
+      "gdp_billion_usd": 42.347
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2010,
+      "gdp_billion_usd": 45.406
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2011,
+      "gdp_billion_usd": 46.869
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2012,
+      "gdp_billion_usd": 56.397
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2013,
+      "gdp_billion_usd": 61.671
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2014,
+      "gdp_billion_usd": 68.286
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2015,
+      "gdp_billion_usd": 70.12
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2016,
+      "gdp_billion_usd": 74.815
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2017,
+      "gdp_billion_usd": 82.037
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2018,
+      "gdp_billion_usd": 92.203
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2019,
+      "gdp_billion_usd": 100.378
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2020,
+      "gdp_billion_usd": 100.658
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2021,
+      "gdp_billion_usd": 109.704
+    },
+    {
+      "country_name": "Kenya",
+      "year": 2022,
+      "gdp_billion_usd": 113.42
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2000,
+      "gdp_billion_usd": 2.069
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2001,
+      "gdp_billion_usd": 1.967
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2002,
+      "gdp_billion_usd": 1.966
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2003,
+      "gdp_billion_usd": 2.138
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2004,
+      "gdp_billion_usd": 2.376
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2005,
+      "gdp_billion_usd": 2.934
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2006,
+      "gdp_billion_usd": 3.32
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2007,
+      "gdp_billion_usd": 4.071
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2008,
+      "gdp_billion_usd": 5.18
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2009,
+      "gdp_billion_usd": 5.674
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2010,
+      "gdp_billion_usd": 6.125
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2011,
+      "gdp_billion_usd": 6.885
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2012,
+      "gdp_billion_usd": 7.655
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2013,
+      "gdp_billion_usd": 7.82
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2014,
+      "gdp_billion_usd": 8.239
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2015,
+      "gdp_billion_usd": 8.544
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2016,
+      "gdp_billion_usd": 8.695
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2017,
+      "gdp_billion_usd": 9.253
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2018,
+      "gdp_billion_usd": 9.638
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2019,
+      "gdp_billion_usd": 10.349
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2020,
+      "gdp_billion_usd": 10.174
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2021,
+      "gdp_billion_usd": 11.069
+    },
+    {
+      "country_name": "Rwanda",
+      "year": 2022,
+      "gdp_billion_usd": 13.316
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2000,
+      "gdp_billion_usd": 13.372
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2001,
+      "gdp_billion_usd": 13.564
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2002,
+      "gdp_billion_usd": 14.13
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2003,
+      "gdp_billion_usd": 15.211
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2004,
+      "gdp_billion_usd": 16.673
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2005,
+      "gdp_billion_usd": 18.395
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2006,
+      "gdp_billion_usd": 18.62
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2007,
+      "gdp_billion_usd": 21.86
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2008,
+      "gdp_billion_usd": 27.948
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2009,
+      "gdp_billion_usd": 29.401
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2010,
+      "gdp_billion_usd": 32.013
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2011,
+      "gdp_billion_usd": 34.657
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2012,
+      "gdp_billion_usd": 39.65
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2013,
+      "gdp_billion_usd": 45.649
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2014,
+      "gdp_billion_usd": 49.987
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2015,
+      "gdp_billion_usd": 47.414
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2016,
+      "gdp_billion_usd": 49.774
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2017,
+      "gdp_billion_usd": 53.275
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2018,
+      "gdp_billion_usd": 57.004
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2019,
+      "gdp_billion_usd": 61.027
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2020,
+      "gdp_billion_usd": 66.069
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2021,
+      "gdp_billion_usd": 70.656
+    },
+    {
+      "country_name": "Tanzania",
+      "year": 2022,
+      "gdp_billion_usd": 75.77
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2000,
+      "gdp_billion_usd": 6.193
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2001,
+      "gdp_billion_usd": 5.841
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2002,
+      "gdp_billion_usd": 6.179
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2003,
+      "gdp_billion_usd": 6.607
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2004,
+      "gdp_billion_usd": 7.939
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2005,
+      "gdp_billion_usd": 9.239
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2006,
+      "gdp_billion_usd": 9.978
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2007,
+      "gdp_billion_usd": 11.903
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2008,
+      "gdp_billion_usd": 14.44
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2009,
+      "gdp_billion_usd": 25.128
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2010,
+      "gdp_billion_usd": 26.673
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2011,
+      "gdp_billion_usd": 27.872
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2012,
+      "gdp_billion_usd": 27.306
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2013,
+      "gdp_billion_usd": 28.916
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2014,
+      "gdp_billion_usd": 32.612
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2015,
+      "gdp_billion_usd": 32.387
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2016,
+      "gdp_billion_usd": 29.204
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2017,
+      "gdp_billion_usd": 30.744
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2018,
+      "gdp_billion_usd": 32.927
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2019,
+      "gdp_billion_usd": 35.348
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2020,
+      "gdp_billion_usd": 37.6
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2021,
+      "gdp_billion_usd": 40.53
+    },
+    {
+      "country_name": "Uganda",
+      "year": 2022,
+      "gdp_billion_usd": 45.565
+    }
+  ],
+  "eac_gdp_per_capita": [
+    {
+      "country_name": "Kenya",
+      "gdp_per_capita_usd": 2091.0
+    },
+    {
+      "country_name": "Tanzania",
+      "gdp_per_capita_usd": 1171.0
+    },
+    {
+      "country_name": "Ethiopia",
+      "gdp_per_capita_usd": 1011.0
+    },
+    {
+      "country_name": "Rwanda",
+      "gdp_per_capita_usd": 975.0
+    },
+    {
+      "country_name": "Uganda",
+      "gdp_per_capita_usd": 963.0
+    },
+    {
+      "country_name": "Burundi",
+      "gdp_per_capita_usd": 251.0
+    }
+  ],
+  "africa_world_gdp_share": [
+    {
+      "era": "2000s",
+      "africa_share_pct": 2.49,
+      "world_gdp_trillion_usd": 464.34
+    },
+    {
+      "era": "2010s",
+      "africa_share_pct": 3.1,
+      "world_gdp_trillion_usd": 774.66
+    },
+    {
+      "era": "2020s",
+      "africa_share_pct": 2.9,
+      "world_gdp_trillion_usd": 384.38
+    },
+    {
+      "era": "Pre-2000",
+      "africa_share_pct": 2.23,
+      "world_gdp_trillion_usd": 282.07
+    }
+  ],
+  "fastest_growing_africa": [
+    {
+      "country_name": "Ethiopia",
+      "gdp_2010_bn": 29.93,
+      "gdp_2022_bn": 126.77,
+      "cagr_pct": 12.78
+    },
+    {
+      "country_name": "Somalia",
+      "gdp_2010_bn": 2.69,
+      "gdp_2022_bn": 10.42,
+      "cagr_pct": 11.95
+    },
+    {
+      "country_name": "Djibouti",
+      "gdp_2010_bn": 1.13,
+      "gdp_2022_bn": 3.67,
+      "cagr_pct": 10.34
+    },
+    {
+      "country_name": "Guinea",
+      "gdp_2010_bn": 6.85,
+      "gdp_2022_bn": 21.0,
+      "cagr_pct": 9.78
+    },
+    {
+      "country_name": "Congo - Kinshasa",
+      "gdp_2010_bn": 21.57,
+      "gdp_2022_bn": 65.8,
+      "cagr_pct": 9.74
+    },
+    {
+      "country_name": "S\u00e3o Tom\u00e9 & Pr\u00edncipe",
+      "gdp_2010_bn": 0.19,
+      "gdp_2022_bn": 0.54,
+      "cagr_pct": 9.14
+    },
+    {
+      "country_name": "Kenya",
+      "gdp_2010_bn": 45.41,
+      "gdp_2022_bn": 113.42,
+      "cagr_pct": 7.93
+    },
+    {
+      "country_name": "Tanzania",
+      "gdp_2010_bn": 32.01,
+      "gdp_2022_bn": 75.77,
+      "cagr_pct": 7.44
+    },
+    {
+      "country_name": "Ghana",
+      "gdp_2010_bn": 32.2,
+      "gdp_2022_bn": 74.26,
+      "cagr_pct": 7.21
+    },
+    {
+      "country_name": "Zimbabwe",
+      "gdp_2010_bn": 12.04,
+      "gdp_2022_bn": 27.37,
+      "cagr_pct": 7.08
+    }
+  ],
+  "uganda_profile": [
+    {
+      "year": 2000,
+      "gdp_billion_usd": 6.193,
+      "population_millions": 24.0,
+      "gdp_per_capita_usd": 258.0
+    },
+    {
+      "year": 2001,
+      "gdp_billion_usd": 5.841,
+      "population_millions": 24.746,
+      "gdp_per_capita_usd": 236.0
+    },
+    {
+      "year": 2002,
+      "gdp_billion_usd": 6.179,
+      "population_millions": 25.533,
+      "gdp_per_capita_usd": 242.0
+    },
+    {
+      "year": 2003,
+      "gdp_billion_usd": 6.607,
+      "population_millions": 26.352,
+      "gdp_per_capita_usd": 251.0
+    },
+    {
+      "year": 2004,
+      "gdp_billion_usd": 7.939,
+      "population_millions": 27.155,
+      "gdp_per_capita_usd": 292.0
+    },
+    {
+      "year": 2005,
+      "gdp_billion_usd": 9.239,
+      "population_millions": 27.963,
+      "gdp_per_capita_usd": 330.0
+    },
+    {
+      "year": 2006,
+      "gdp_billion_usd": 9.978,
+      "population_millions": 28.794,
+      "gdp_per_capita_usd": 347.0
+    },
+    {
+      "year": 2007,
+      "gdp_billion_usd": 11.903,
+      "population_millions": 29.653,
+      "gdp_per_capita_usd": 401.0
+    },
+    {
+      "year": 2008,
+      "gdp_billion_usd": 14.44,
+      "population_millions": 30.54,
+      "gdp_per_capita_usd": 473.0
+    },
+    {
+      "year": 2009,
+      "gdp_billion_usd": 25.128,
+      "population_millions": 31.451,
+      "gdp_per_capita_usd": 799.0
+    },
+    {
+      "year": 2010,
+      "gdp_billion_usd": 26.673,
+      "population_millions": 32.391,
+      "gdp_per_capita_usd": 823.0
+    },
+    {
+      "year": 2011,
+      "gdp_billion_usd": 27.872,
+      "population_millions": 33.355,
+      "gdp_per_capita_usd": 836.0
+    },
+    {
+      "year": 2012,
+      "gdp_billion_usd": 27.306,
+      "population_millions": 34.337,
+      "gdp_per_capita_usd": 795.0
+    },
+    {
+      "year": 2013,
+      "gdp_billion_usd": 28.916,
+      "population_millions": 35.337,
+      "gdp_per_capita_usd": 818.0
+    },
+    {
+      "year": 2014,
+      "gdp_billion_usd": 32.612,
+      "population_millions": 36.396,
+      "gdp_per_capita_usd": 896.0
+    },
+    {
+      "year": 2015,
+      "gdp_billion_usd": 32.387,
+      "population_millions": 37.531,
+      "gdp_per_capita_usd": 863.0
+    },
+    {
+      "year": 2016,
+      "gdp_billion_usd": 29.204,
+      "population_millions": 38.799,
+      "gdp_per_capita_usd": 753.0
+    },
+    {
+      "year": 2017,
+      "gdp_billion_usd": 30.744,
+      "population_millions": 40.177,
+      "gdp_per_capita_usd": 765.0
+    },
+    {
+      "year": 2018,
+      "gdp_billion_usd": 32.927,
+      "population_millions": 41.566,
+      "gdp_per_capita_usd": 792.0
+    },
+    {
+      "year": 2019,
+      "gdp_billion_usd": 35.348,
+      "population_millions": 43.0,
+      "gdp_per_capita_usd": 822.0
+    },
+    {
+      "year": 2020,
+      "gdp_billion_usd": 37.6,
+      "population_millions": 44.457,
+      "gdp_per_capita_usd": 846.0
+    },
+    {
+      "year": 2021,
+      "gdp_billion_usd": 40.53,
+      "population_millions": 45.911,
+      "gdp_per_capita_usd": 883.0
+    },
+    {
+      "year": 2022,
+      "gdp_billion_usd": 45.565,
+      "population_millions": 47.313,
+      "gdp_per_capita_usd": 963.0
+    }
+  ],
+  "warehouse_summary": [
+    {
+      "total_countries": 215,
+      "african_countries": 54,
+      "min_year": 1990,
+      "max_year": 2023,
+      "total_facts": 21136,
+      "indicators": 3
+    }
+  ]
+}

@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoWarehouse · Africa Economic Intelligence</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --border: #1e2330;
+    --border-bright: #2a3248;
+    --text: #c8d0e0;
+    --text-dim: #5a6480;
+    --text-bright: #edf2ff;
+    --accent: #00d4a8;
+    --accent2: #f5a623;
+    --accent3: #7c6af7;
+    --red: #ff5c5c;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ── LAYOUT ── */
+  .shell {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: 56px 1fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 16px;
+  }
+  .logo {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo-icon {
+    width: 24px; height: 24px;
+    background: var(--accent);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    opacity: 0.9;
+  }
+  .topbar-sep { width: 1px; height: 20px; background: var(--border-bright); }
+  .topbar-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+  .topbar-stats {
+    margin-left: auto;
+    display: flex;
+    gap: 24px;
+  }
+  .stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+  .stat-pill strong { color: var(--accent); font-size: 13px; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .sidebar-section {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    padding: 0 16px 8px;
+    text-transform: uppercase;
+  }
+  .query-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    color: var(--text);
+  }
+  .query-btn:hover { background: rgba(255,255,255,0.03); }
+  .query-btn.active { background: rgba(0,212,168,0.07); border-right: 2px solid var(--accent); }
+  .query-btn .q-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    min-width: 18px;
+  }
+  .query-btn.active .q-num { color: var(--accent); }
+  .query-btn .q-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-bright);
+    line-height: 1.3;
+  }
+  .query-btn .q-sub {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .schema-tree {
+    padding: 0 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+  .schema-tree .table { color: var(--accent3); }
+  .schema-tree .col { color: var(--text-dim); padding-left: 12px; }
+  .schema-tree .col::before { content: "├ "; }
+
+  /* ── MAIN PANEL ── */
+  .main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── QUERY EDITOR ── */
+  .query-editor {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .editor-topbar {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+  }
+  .editor-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+  .run-btn {
+    margin-left: auto;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 5px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    transition: opacity 0.15s;
+  }
+  .run-btn:hover { opacity: 0.85; }
+  .query-code {
+    padding: 12px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--text);
+    max-height: 160px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+  }
+  .query-code pre {
+    white-space: pre-wrap; /* Ensure SQL text wraps */
+    font-family: var(--mono);
+  }
+  /* SQL syntax highlight */
+  .kw { color: #7c6af7; }
+  .fn { color: #f5a623; }
+  .str { color: #00d4a8; }
+  .cmt { color: var(--text-dim); font-style: italic; }
+
+  /* ── RESULTS PANEL ── */
+  .results {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .result-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .result-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-bright);
+    letter-spacing: -0.01em;
+  }
+  .result-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .result-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+
+  /* ── CHART CONTAINERS ── */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .chart-card.wide { grid-column: 1 / -1; }
+  .chart-card-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  svg { overflow: visible; }
+
+  /* ── DATA TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-bright);
+  }
+  .data-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .num { font-family: var(--mono); color: var(--accent); }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 11px;
+    background: rgba(0,212,168,0.1);
+    color: var(--accent);
+  }
+
+  /* ── BAR CHART ── */
+  .bar-bg { fill: rgba(255,255,255,0.03); }
+  .bar-fill { fill: var(--accent); }
+  .bar-label { fill: var(--text); font-family: var(--sans); font-size: 12px; }
+  .bar-val { fill: var(--accent); font-family: var(--mono); font-size: 11px; }
+  .axis-line { stroke: var(--border-bright); stroke-width: 1; }
+  .tick-text { fill: var(--text-dim); font-family: var(--mono); font-size: 10px; }
+
+  /* ── LINE CHART ── */
+  .line-path { fill: none; stroke-width: 2; }
+  .area-path { opacity: 0.08; }
+  .grid-line { stroke: var(--border); stroke-width: 1; }
+  .tooltip-box {
+    position: fixed;
+    background: var(--surface);
+    border: 1px solid var(--border-bright);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-family: var(--mono);
+    pointer-events: none;
+    display: none;
+    z-index: 100;
+    border-radius: 4px;
+  }
+  .tooltip-box .t-country { color: var(--text-bright); font-weight: 600; margin-bottom: 4px; }
+  .tooltip-box .t-val { color: var(--accent); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-icon"></div>
+      ECOWAREHOUSE
+    </div>
+    <div class="topbar-sep"></div>
+    <span class="topbar-tag">Africa Economic Intelligence · World Bank DuckDB Star Schema</span>
+    <div class="topbar-stats">
+      <div class="stat-pill"><strong>215</strong> countries</div>
+      <div class="stat-pill"><strong>54</strong> African</div>
+      <div class="stat-pill"><strong>1990–2023</strong></div>
+      <div class="stat-pill"><strong>21,136</strong> fact rows</div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Queries</div>
+      <button class="query-btn active" onclick="showQuery(0)">
+        <span class="q-num">Q1</span>
+        <div><div class="q-label">Top 10 Africa GDP</div><div class="q-sub">Latest year · 2023</div></div>
+      </button>
+      <button class="query-btn" onclick="showQuery(1)">
+        <span class="q-num">Q2</span>
+        <div><div class="q-label">East Africa Trend</div><div class="q-sub">GDP 2000–2022</div></div>
+      </button>
+      <button class="query-btn" onclick="showQuery(2)">
+        <span class="q-num">Q3</span>
+        <div><div class="q-label">EAC GDP Per Capita</div><div class="q-sub">2022 · 6 countries</div></div>
+      </button>
+      <button class="query-btn" onclick="showQuery(3)">
+        <span class="q-num">Q4</span>
+        <div><div class="q-label">Africa World Share</div><div class="q-sub">By era</div></div>
+      </button>
+      <button class="query-btn" onclick="showQuery(4)">
+        <span class="q-num">Q5</span>
+        <div><div class="q-label">Fastest Growing</div><div class="q-sub">CAGR 2010→2022</div></div>
+      </button>
+      <button class="query-btn" onclick="showQuery(5)">
+        <span class="q-num">Q6</span>
+        <div><div class="q-label">Uganda Profile</div><div class="q-sub">2000–2022</div></div>
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Schema</div>
+      <div class="schema-tree">
+        <div class="table">fact_economic</div>
+        <div class="col">country_key</div>
+        <div class="col">time_key</div>
+        <div class="col">indicator_key</div>
+        <div class="col">value</div>
+        <div class="table" style="margin-top:6px">dim_country</div>
+        <div class="col">country_name</div>
+        <div class="col">iso3, region</div>
+        <div class="table" style="margin-top:6px">dim_time</div>
+        <div class="col">year, era</div>
+        <div class="table" style="margin-top:6px">dim_indicator</div>
+        <div class="col">GDP · Population</div>
+        <div class="col">GDP_Per_Capita</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN PANEL -->
+  <div class="main">
+    <!-- QUERY EDITOR -->
+    <div class="query-editor">
+      <div class="editor-topbar">
+        <span class="editor-label">SQL EDITOR</span>
+        <button class="run-btn" onclick="flashRun(this)">▶ RUN</button>
+      </div>
+      <div class="query-code" id="queryCode">Loading...</div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results" id="resultsPanel">
+    </div>
+  </div>
+</div>
+
+<div class="tooltip-box" id="tooltip"></div>
+
+<script>
+// ── QUERY DEFINITIONS ────────────────────────────────────────────────────────
+const QUERIES = [
+  {
+    id: 'top10_africa_gdp',
+    title: 'Top 10 African Economies by GDP',
+    desc: 'Largest African economies by total GDP in 2023 (USD billions). Source: World Bank via EcoWarehouse star schema.',
+    sql: `SELECT c.country_name, c.intermediate_region AS sub_region,
+       t.year, ROUND(f.value / 1e9, 2) AS gdp_billion_usd
+FROM fact_economic f
+JOIN dim_country c ON f.country_key = c.country_key
+JOIN dim_time t ON f.time_key = t.time_key
+JOIN dim_indicator i ON f.indicator_key = i.indicator_key
+WHERE c.region = 'Africa'
+  AND i.indicator_code = 'GDP'
+  AND t.year = (SELECT MAX(t2.year) FROM ...)
+ORDER BY f.value DESC LIMIT 10`,
+    render: renderTop10
+  },
+  {
+    id: 'east_africa_gdp_trend',
+    title: 'East Africa GDP Trend 2000–2022',
+    desc: 'GDP growth trajectories for 6 East African nations. Hover lines for country details.',
+    sql: `SELECT c.country_name, t.year,
+       ROUND(f.value / 1e9, 3) AS gdp_billion_usd
+FROM fact_economic f
+JOIN dim_country c ON f.country_key = c.country_key
+JOIN dim_time t ON f.time_key = t.time_key
+JOIN dim_indicator i ON f.indicator_key = i.indicator_key
+WHERE c.intermediate_region = 'Eastern Africa'
+  AND c.country_name IN ('Uganda','Kenya','Tanzania','Rwanda','Ethiopia','Burundi')
+  AND i.indicator_code = 'GDP'
+  AND t.year BETWEEN 2000 AND 2022
+ORDER BY c.country_name, t.year`,
+    render: renderEastAfrica
+  },
+  {
+    id: 'eac_gdp_per_capita',
+    title: 'EAC GDP Per Capita (2022)',
+    desc: 'GDP per capita in USD for East African Community member states in 2022.',
+    sql: `SELECT c.country_name, ROUND(f.value, 0) AS gdp_per_capita_usd
+FROM fact_economic f
+JOIN dim_country c ON f.country_key = c.country_key
+JOIN dim_time t ON f.time_key = t.time_key
+JOIN dim_indicator i ON f.indicator_key = i.indicator_key
+WHERE c.country_name IN ('Uganda','Kenya','Tanzania','Rwanda','Ethiopia','Burundi','South Sudan')
+  AND i.indicator_code = 'GDP_Per_Capita'
+  AND t.year = 2022
+ORDER BY f.value DESC`,
+    render: renderPerCapita
+  },
+  {
+    id: 'africa_world_gdp_share',
+    title: "Africa's Share of World GDP by Era",
+    desc: "Africa's contribution to global GDP across four historical periods, compared against total world GDP.",
+    sql: `SELECT t.era,
+       ROUND(SUM(CASE WHEN c.region = 'Africa' THEN f.value ELSE 0 END)
+             / SUM(f.value) * 100, 2) AS africa_share_pct,
+       ROUND(SUM(f.value) / 1e12, 2) AS world_gdp_trillion_usd
+FROM fact_economic f
+JOIN dim_country c ON f.country_key = c.country_key
+JOIN dim_time t ON f.time_key = t.time_key
+JOIN dim_indicator i ON f.indicator_key = i.indicator_key
+WHERE i.indicator_code = 'GDP'
+GROUP BY t.era ORDER BY t.era`,
+    render: renderEraShare
+  },
+  {
+    id: 'fastest_growing_africa',
+    title: 'Fastest-Growing African Economies',
+    desc: 'Top 10 African economies ranked by CAGR between 2010 and 2022.',
+    sql: `WITH pivoted AS (
+  SELECT c.country_name,
+    MAX(CASE WHEN t.year = 2010 THEN f.value END) AS gdp_2010,
+    MAX(CASE WHEN t.year = 2022 THEN f.value END) AS gdp_2022
+  FROM fact_economic f JOIN dim_country c ... GROUP BY c.country_name
+)
+SELECT country_name,
+  ROUND(gdp_2010/1e9,2) AS gdp_2010_bn,
+  ROUND(gdp_2022/1e9,2) AS gdp_2022_bn,
+  ROUND((POWER(gdp_2022/gdp_2010,1.0/12)-1)*100,2) AS cagr_pct
+FROM pivoted WHERE gdp_2010>1e8 AND gdp_2022>1e8
+ORDER BY cagr_pct DESC LIMIT 10`,
+    render: renderFastestGrowing
+  },
+  {
+    id: 'uganda_profile',
+    title: 'Uganda Economic Profile 2000–2022',
+    desc: 'Uganda GDP, population, and per-capita income over 22 years.',
+    sql: `SELECT t.year,
+  MAX(CASE WHEN i.indicator_code = 'GDP' THEN ROUND(f.value/1e9,3) END) AS gdp_billion_usd,
+  MAX(CASE WHEN i.indicator_code = 'Population' THEN ROUND(f.value/1e6,3) END) AS population_millions,
+  MAX(CASE WHEN i.indicator_code = 'GDP_Per_Capita' THEN ROUND(f.value,0) END) AS gdp_per_capita_usd
+FROM fact_economic f JOIN dim_country c ... WHERE c.iso3 = 'UGA'
+  AND t.year BETWEEN 2000 AND 2022
+GROUP BY t.year ORDER BY t.year`,
+    render: renderUganda
+  }
+];
+
+// ── COLOURS ──────────────────────────────────────────────────────────────────
+const COUNTRY_COLORS = {
+  Ethiopia: '#00d4a8',
+  Kenya: '#f5a623',
+  Tanzania: '#7c6af7',
+  Uganda: '#ff5c5c',
+  Rwanda: '#3dd6f5',
+  Burundi: '#8b9467'
+};
+const ERA_COLORS = ['#3a3f5c','#4a5882','#7c6af7','#00d4a8'];
+
+// ── UTILS ────────────────────────────────────────────────────────────────────
+function fmt(n, dec=1) { return n != null ? n.toFixed(dec) : '—'; }
+
+async function showQuery(idx) {
+  const startTime = Date.now();
+  document.querySelectorAll('.query-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  const q = QUERIES[idx];
+  document.getElementById('queryCode').innerHTML = syntaxHL(q.sql);
+  const panel = document.getElementById('resultsPanel');
+  panel.innerHTML = '<div>Loading data...</div>';
+
+  // Fetch data from the new API endpoint
+  const response = await fetch(`/api/data/${q.id}`);
+  if (!response.ok) {
+    panel.innerHTML = `<div class="result-desc" style="color:var(--red)">Error fetching data: ${response.statusText}</div>`;
+    return;
+  }
+  const data = await response.json();
+  const duration = Date.now() - startTime;
+
+  panel.innerHTML = ''; // Clear loading message
+  const header = document.createElement('div');
+  header.innerHTML = `<div class="result-header"><div class="result-title">${q.title}</div><div class="result-meta">${data.length} rows · ${duration}ms</div></div><div class="result-desc">${q.desc}</div>`;
+  panel.appendChild(header);
+  q.render(panel, data);
+}
+
+function syntaxHL(sql) {
+  return sql
+    .replace(/\b(SELECT|FROM|WHERE|JOIN|ON|AND|OR|GROUP BY|ORDER BY|HAVING|LIMIT|WITH|AS|IN|BETWEEN|CASE|WHEN|THEN|END|ROUND|MAX|MIN|SUM|POWER|COUNT|DISTINCT|LEFT|INNER|DESC|ASC)\b/g, '<span class="kw">$1</span>')
+    .replace(/--[^\n]*/g, '<span class="cmt">$&</span>')
+    .replace(/'[^']*'/g, '<span class="str">$&</span>');
+}
+
+function flashRun(btn) {
+  btn.textContent = '✓ DONE';
+  btn.style.background = '#2a6';
+  setTimeout(()=>{ btn.textContent='▶ RUN'; btn.style.background=''; }, 800);
+}
+
+// ── RENDER FUNCTIONS ─────────────────────────────────────────────────────────
+
+function renderTop10(panel, data) {
+  const grid = div('chart-grid');
+
+  // Horizontal bar chart
+  const card = div('chart-card wide');
+  card.innerHTML = '<div class="chart-card-title">GDP · Billion USD · 2023</div>';
+  const W = 680, H = 320, ml = 130, mr = 80, mt = 10, mb = 10;
+  const svg = makeSVG(W, H);
+  const maxVal = d3.max(data, d=>d.gdp_billion_usd);
+  const yScale = d3.scaleBand().domain(data.map(d=>d.country_name)).range([mt, H-mb]).padding(0.25);
+  const xScale = d3.scaleLinear().domain([0, maxVal*1.1]).range([ml, W-mr]);
+
+  data.forEach((d,i) => {
+    const y = yScale(d.country_name);
+    const bw = xScale(d.gdp_billion_usd) - ml;
+    const isEast = ['Ethiopia','Kenya','Tanzania','Uganda'].includes(d.country_name);
+
+    rect(svg, ml, y, bw, yScale.bandwidth(), isEast ? 'rgba(0,212,168,0.7)' : 'rgba(124,106,247,0.5)');
+    text(svg, ml-8, y + yScale.bandwidth()/2 + 4, d.country_name, 'bar-label', 'end');
+    text(svg, xScale(d.gdp_billion_usd)+6, y + yScale.bandwidth()/2 + 4, `$${d.gdp_billion_usd}B`, 'bar-val', 'start');
+  });
+
+  // Axis
+  line(svg, ml, mt, ml, H-mb, 'axis-line');
+  card.appendChild(svg);
+  grid.appendChild(card);
+
+  // Table
+  const card2 = div('chart-card wide');
+  card2.innerHTML = `<div class="chart-card-title">Raw data</div>
+  <table class="data-table"><thead><tr><th>#</th><th>Country</th><th>Region</th><th>GDP (B USD)</th></tr></thead>
+  <tbody>${data.map((d,i)=>`<tr><td class="num">${i+1}</td><td>${d.country_name}</td><td>${d.sub_region||'—'}</td><td class="num">$${d.gdp_billion_usd}B</td></tr>`).join('')}</tbody></table>`;
+  grid.appendChild(card2);
+  panel.appendChild(grid);
+}
+
+function renderEastAfrica(panel, data) {
+  const grid = div('chart-grid');
+  const card = div('chart-card wide');
+  card.innerHTML = '<div class="chart-card-title">GDP · Billion USD · 2000–2022</div>';
+
+  const W = 680, H = 300, ml = 50, mr = 110, mt = 20, mb = 30;
+  const svg = makeSVG(W, H);
+  const countries = [...new Set(data.map(d=>d.country_name))];
+  const years = [...new Set(data.map(d=>d.year))].sort();
+  const xScale = d3.scaleLinear().domain([2000,2022]).range([ml, W-mr]);
+  const maxVal = d3.max(data, d=>d.gdp_billion_usd);
+  const yScale = d3.scaleLinear().domain([0, maxVal*1.05]).range([H-mb, mt]);
+
+  // Grid lines
+  [0, 30, 60, 90, 120].forEach(v => {
+    line(svg, ml, yScale(v), W-mr, yScale(v), 'grid-line');
+    text(svg, ml-6, yScale(v)+4, v===0?'':v, 'tick-text', 'end');
+  });
+  years.filter(y=>y%4===0).forEach(y=>{
+    text(svg, xScale(y), H-mb+14, y, 'tick-text', 'middle');
+  });
+
+  const grouped = d3.group(data, d=>d.country_name);
+  const lineGen = d3.line().x(d=>xScale(d.year)).y(d=>yScale(d.gdp_billion_usd)).curve(d3.curveMonotoneX);
+
+  const tt = document.getElementById('tooltip');
+
+  grouped.forEach((vals, country) => {
+    const col = COUNTRY_COLORS[country] || '#888';
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', lineGen(vals));
+    path.setAttribute('class','line-path');
+    path.setAttribute('stroke', col);
+    path.style.cursor = 'pointer';
+    path.addEventListener('mouseenter', e => {
+      const last = vals[vals.length-1];
+      tt.style.display = 'block';
+      tt.innerHTML = `<div class="t-country">${country}</div><div class="t-val">$${last.gdp_billion_usd}B (2022)</div>`;
+    });
+    path.addEventListener('mousemove', e => { tt.style.left=(e.clientX+12)+'px'; tt.style.top=(e.clientY-20)+'px'; });
+    path.addEventListener('mouseleave', () => { tt.style.display='none'; });
+    svg.appendChild(path);
+
+    // Label at end
+    const last = vals[vals.length-1];
+    text(svg, W-mr+6, yScale(last.gdp_billion_usd)+4, country, 'bar-label', 'start', col);
+  });
+
+  line(svg, ml, H-mb, W-mr, H-mb, 'axis-line');
+  card.appendChild(svg);
+  grid.appendChild(card);
+  panel.appendChild(grid);
+}
+
+function renderPerCapita(panel, data) {
+  const grid = div('chart-grid');
+  const card = div('chart-card wide');
+  card.innerHTML = '<div class="chart-card-title">GDP Per Capita · USD · 2022</div>';
+
+  const W = 680, H = 240, ml = 120, mr = 100, mt = 10, mb = 30;
+  const svg = makeSVG(W, H);
+  const maxVal = d3.max(data, d=>d.gdp_per_capita_usd);
+  const yScale = d3.scaleBand().domain(data.map(d=>d.country_name)).range([mt, H-mb]).padding(0.3);
+  const xScale = d3.scaleLinear().domain([0, maxVal*1.15]).range([ml, W-mr]);
+
+  data.forEach(d => {
+    const y = yScale(d.country_name);
+    const bw = xScale(d.gdp_per_capita_usd) - ml;
+    const col = COUNTRY_COLORS[d.country_name] || 'rgba(124,106,247,0.7)';
+    rect(svg, ml, y, bw, yScale.bandwidth(), col, 0.75);
+    text(svg, ml-8, y + yScale.bandwidth()/2 + 4, d.country_name, 'bar-label', 'end');
+    text(svg, xScale(d.gdp_per_capita_usd)+6, y + yScale.bandwidth()/2 + 4, `$${d.gdp_per_capita_usd.toLocaleString()}`, 'bar-val', 'start');
+  });
+
+  line(svg, ml, mt, ml, H-mb, 'axis-line');
+  card.appendChild(svg);
+  grid.appendChild(card);
+  panel.appendChild(grid);
+}
+
+function renderEraShare(panel, data) {
+  const ordered = ['Pre-2000','2000s','2010s','2020s'].map(e => data.find(d=>d.era===e));
+  const grid = div('chart-grid');
+
+  // Share bars
+  const card = div('chart-card');
+  card.innerHTML = '<div class="chart-card-title">Africa % of World GDP</div>';
+  const W = 310, H = 220, ml = 80, mr = 60, mt = 10, mb = 30;
+  const svg = makeSVG(W, H);
+  const yScale = d3.scaleBand().domain(ordered.map(d=>d.era)).range([mt, H-mb]).padding(0.3);
+  const xScale = d3.scaleLinear().domain([0, 4]).range([ml, W-mr]);
+
+  ordered.forEach((d,i) => {
+    const y = yScale(d.era);
+    const bw = xScale(d.africa_share_pct) - ml;
+    rect(svg, ml, y, bw, yScale.bandwidth(), ERA_COLORS[i], 0.85);
+    text(svg, ml-8, y + yScale.bandwidth()/2 + 4, d.era, 'bar-label', 'end');
+    text(svg, xScale(d.africa_share_pct)+5, y + yScale.bandwidth()/2 + 4, `${d.africa_share_pct}%`, 'bar-val', 'start');
+  });
+  line(svg, ml, mt, ml, H-mb, 'axis-line');
+  card.appendChild(svg);
+  grid.appendChild(card);
+
+  // World GDP total
+  const card2 = div('chart-card');
+  card2.innerHTML = '<div class="chart-card-title">World GDP · Trillion USD (cumulative)</div>';
+  const svg2 = makeSVG(W, H);
+  const xScale2 = d3.scaleBand().domain(ordered.map(d=>d.era)).range([ml-20, W-20]).padding(0.3);
+  const yScale2 = d3.scaleLinear().domain([0, 900]).range([H-mb, mt]);
+
+  ordered.forEach((d,i) => {
+    const x = xScale2(d.era);
+    const bh = H-mb - yScale2(d.world_gdp_trillion_usd);
+    rect(svg2, x, yScale2(d.world_gdp_trillion_usd), xScale2.bandwidth(), bh, ERA_COLORS[i], 0.85);
+    text(svg2, x + xScale2.bandwidth()/2, yScale2(d.world_gdp_trillion_usd)-6, `$${d.world_gdp_trillion_usd}T`, 'bar-val', 'middle');
+    text(svg2, x + xScale2.bandwidth()/2, H-mb+14, d.era, 'tick-text', 'middle');
+  });
+  line(svg2, ml-20, H-mb, W-20, H-mb, 'axis-line');
+  card2.appendChild(svg2);
+  grid.appendChild(card2);
+  panel.appendChild(grid);
+}
+
+function renderFastestGrowing(panel, data) {
+  const grid = div('chart-grid');
+  const card = div('chart-card wide');
+  card.innerHTML = '<div class="chart-card-title">CAGR 2010→2022 (%)</div>';
+
+  const W = 680, H = 300, ml = 170, mr = 80, mt = 10, mb = 10;
+  const svg = makeSVG(W, H);
+  const yScale = d3.scaleBand().domain(data.map(d=>d.country_name)).range([mt, H-mb]).padding(0.25);
+  const maxVal = d3.max(data, d=>d.cagr_pct);
+  const xScale = d3.scaleLinear().domain([0, maxVal*1.15]).range([ml, W-mr]);
+
+  data.forEach((d,i) => {
+    const y = yScale(d.country_name);
+    const bw = xScale(d.cagr_pct) - ml;
+    const heat = d3.interpolateRgb('#2a3248','#00d4a8')(d.cagr_pct / maxVal);
+    rect(svg, ml, y, bw, yScale.bandwidth(), heat);
+    text(svg, ml-8, y + yScale.bandwidth()/2 + 4, d.country_name, 'bar-label', 'end');
+    text(svg, xScale(d.cagr_pct)+6, y + yScale.bandwidth()/2 + 4, `${d.cagr_pct}%`, 'bar-val', 'start');
+  });
+
+  line(svg, ml, mt, ml, H-mb, 'axis-line');
+  card.appendChild(svg);
+  grid.appendChild(card);
+
+  // table
+  const card2 = div('chart-card wide');
+  card2.innerHTML = `<div class="chart-card-title">Detailed breakdown</div>
+  <table class="data-table"><thead><tr><th>#</th><th>Country</th><th>2010 GDP</th><th>2022 GDP</th><th>CAGR</th></tr></thead>
+  <tbody>${data.map((d,i)=>`<tr><td class="num">${i+1}</td><td>${d.country_name}</td><td class="num">$${d.gdp_2010_bn}B</td><td class="num">$${d.gdp_2022_bn}B</td><td><span class="badge">${d.cagr_pct}%</span></td></tr>`).join('')}</tbody></table>`;
+  grid.appendChild(card2);
+  panel.appendChild(grid);
+}
+
+function renderUganda(panel, data) {
+  const grid = div('chart-grid');
+
+  // GDP line
+  const card = div('chart-card wide');
+  card.innerHTML = '<div class="chart-card-title">Uganda GDP · Billion USD</div>';
+  const W = 680, H = 220, ml = 50, mr = 30, mt = 20, mb = 30;
+  const svg = makeSVG(W, H);
+  const xScale = d3.scaleLinear().domain([2000,2022]).range([ml, W-mr]);
+  const yScale = d3.scaleLinear().domain([0, 50]).range([H-mb, mt]);
+
+  // Area
+  const areaGen = d3.area().x(d=>xScale(d.year)).y0(H-mb).y1(d=>yScale(d.gdp_billion_usd)).curve(d3.curveMonotoneX);
+  const areaPth = document.createElementNS('http://www.w3.org/2000/svg','path');
+  areaPth.setAttribute('d', areaGen(data));
+  areaPth.setAttribute('fill','url(#gdpGrad)');
+  areaPth.setAttribute('opacity','0.3');
+
+  const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  defs.innerHTML = `<linearGradient id="gdpGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00d4a8"/><stop offset="100%" stop-color="#00d4a8" stop-opacity="0"/></linearGradient>`;
+  svg.appendChild(defs);
+  svg.appendChild(areaPth);
+
+  const lineGen = d3.line().x(d=>xScale(d.year)).y(d=>yScale(d.gdp_billion_usd)).curve(d3.curveMonotoneX);
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d', lineGen(data));
+  path.setAttribute('class','line-path');
+  path.setAttribute('stroke','#00d4a8');
+  svg.appendChild(path);
+
+  [0,10,20,30,40,50].forEach(v=>{
+    line(svg, ml, yScale(v), W-mr, yScale(v), 'grid-line');
+    text(svg, ml-6, yScale(v)+4, v===0?'':v, 'tick-text', 'end');
+  });
+  [2000,2005,2010,2015,2020,2022].forEach(y=>{
+    text(svg, xScale(y), H-mb+14, y, 'tick-text', 'middle');
+  });
+  line(svg, ml, H-mb, W-mr, H-mb, 'axis-line');
+  card.appendChild(svg);
+  grid.appendChild(card);
+
+  // GDP/Capita
+  const card2 = div('chart-card');
+  card2.innerHTML = '<div class="chart-card-title">GDP Per Capita · USD</div>';
+  const svg2 = makeSVG(340, 180);
+  const xS2 = d3.scaleLinear().domain([2000,2022]).range([40,310]);
+  const yS2 = d3.scaleLinear().domain([0,1100]).range([160,20]);
+  const lG2 = d3.line().x(d=>xS2(d.year)).y(d=>yS2(d.gdp_per_capita_usd)).curve(d3.curveMonotoneX);
+  const p2 = document.createElementNS('http://www.w3.org/2000/svg','path');
+  p2.setAttribute('d', lG2(data)); p2.setAttribute('class','line-path'); p2.setAttribute('stroke','#f5a623');
+  svg2.appendChild(p2);
+  [0,300,600,900].forEach(v=>{ line(svg2,40,yS2(v),310,yS2(v),'grid-line'); text(svg2,34,yS2(v)+4,v===0?'':'$'+v,'tick-text','end'); });
+  line(svg2,40,160,310,160,'axis-line');
+  [2000,2010,2022].forEach(y=>text(svg2,xS2(y),174,y,'tick-text','middle'));
+  card2.appendChild(svg2);
+  grid.appendChild(card2);
+
+  // Population
+  const card3 = div('chart-card');
+  card3.innerHTML = '<div class="chart-card-title">Population · Millions</div>';
+  const svg3 = makeSVG(340, 180);
+  const xS3 = d3.scaleLinear().domain([2000,2022]).range([40,310]);
+  const yS3 = d3.scaleLinear().domain([22,50]).range([160,20]);
+  const lG3 = d3.line().x(d=>xS3(d.year)).y(d=>yS3(d.population_millions)).curve(d3.curveMonotoneX);
+  const p3 = document.createElementNS('http://www.w3.org/2000/svg','path');
+  p3.setAttribute('d', lG3(data)); p3.setAttribute('class','line-path'); p3.setAttribute('stroke','#7c6af7');
+  svg3.appendChild(p3);
+  [25,35,45].forEach(v=>{ line(svg3,40,yS3(v),310,yS3(v),'grid-line'); text(svg3,34,yS3(v)+4,v,'tick-text','end'); });
+  line(svg3,40,160,310,160,'axis-line');
+  [2000,2010,2022].forEach(y=>text(svg3,xS3(y),174,y,'tick-text','middle'));
+  card3.appendChild(svg3);
+  grid.appendChild(card3);
+
+  // Table
+  const card4 = div('chart-card wide');
+  card4.innerHTML = `<div class="chart-card-title">Year-by-year data</div>
+  <table class="data-table"><thead><tr><th>Year</th><th>GDP (B USD)</th><th>Population (M)</th><th>GDP/Capita (USD)</th></tr></thead>
+  <tbody>${data.map(d=>`<tr><td class="num">${d.year}</td><td class="num">$${d.gdp_billion_usd}B</td><td class="num">${d.population_millions}M</td><td class="num">$${d.gdp_per_capita_usd}</td></tr>`).join('')}</tbody></table>`;
+  grid.appendChild(card4);
+  panel.appendChild(grid);
+}
+
+// ── SVG HELPERS ──────────────────────────────────────────────────────────────
+function makeSVG(w, h) {
+  const s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  s.setAttribute('width','100%');
+  s.setAttribute('height', h);
+  return s;
+}
+function rect(svg, x, y, w, h, fill, opacity=1) {
+  const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+  r.setAttribute('x',x); r.setAttribute('y',y);
+  r.setAttribute('width',Math.max(0,w)); r.setAttribute('height',Math.max(0,h));
+  r.setAttribute('fill',fill); r.setAttribute('opacity',opacity);
+  r.setAttribute('rx','2');
+  svg.appendChild(r); return r;
+}
+function line(svg, x1, y1, x2, y2, cls) {
+  const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+  l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);
+  l.setAttribute('class',cls);
+  svg.appendChild(l);
+}
+function text(svg, x, y, content, cls, anchor='start', fill=null) {
+  const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x',x); t.setAttribute('y',y);
+  t.setAttribute('class',cls);
+  t.setAttribute('text-anchor', anchor);
+  if(fill) t.setAttribute('fill',fill);
+  t.textContent = content;
+  svg.appendChild(t);
+}
+function div(cls) { const d = document.createElement('div'); d.className=cls; return d; }
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+showQuery(0);
+</script>
+</body>
+</html>
