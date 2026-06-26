@@ -19,8 +19,11 @@ SOURCE (GitHub/World Bank CSVs)
         ▼ [LOAD]  etl/load.py
   warehouse.duckdb
         │
-        ▼ [ANALYTICS]  analytics/queries.py
-  outputs/analytics_results.json
+        ▼ [API]  api/server.py (FastAPI)
+  /api/* endpoints
+        │
+        ▼ [FRONTEND]  (React/Vite)
+  Browser UI
 ```
 
 ## Star Schema
@@ -100,6 +103,26 @@ print(con.execute('''
     ORDER BY t.year
 ''').df())
 "
+
+How to run it
+Step 1 — Install Python deps (once):
+bashpip install -r requirements.txt
+
+Step 2 — Run the ETL pipeline (if warehouse.duckdb doesn't exist yet):
+bashpython -m ecowarehouse.main
+
+Step 3 — Start FastAPI:
+bashuvicorn ecowarehouse.api.server:app --reload --port 8000
+
+Step 4 — Install JS deps and start Vite (new terminal):
+bashnpm install
+npm run dev
+
+Open http://localhost:5173 — Vite proxies all /api/* requests to FastAPI automatically.
+
+For production — build React and let FastAPI serve everything from a single process:
+bashnpm run build
+uvicorn ecowarehouse.api.server:app --port 8000
 ```
 
 ## Project Structure
